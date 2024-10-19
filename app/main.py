@@ -1,23 +1,28 @@
-import os
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
+#db
+from app.database.connection import engine, Base
+
 # middlewares
-from middlewares.error_handler import ErrorHandler
+from app.middlewares.error_handler import ErrorHandler
 from fastapi.middleware.cors import CORSMiddleware
 
 # routers
-
-
-
-
-
-
+from app.routers import client
+from app.routers import product
 
 
 app = FastAPI()
 app.title = "Ventas-Api"
 app.version = "0.1"
+
+# Crear las tablas
+Base.metadata.create_all(bind=engine)
+
+# Incluir rutas
+app.include_router(client.router)
+app.include_router(product.router)
 
 app.add_middleware(ErrorHandler)
 
