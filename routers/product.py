@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from app.schemas.product import ProductCreate, Product
-from app.services.product import ProductService
+from schemas.product import ProductCreate, Product
+from services.product import ProductService
 #db
-from app.database.connection import get_db
+from database.connection import get_db
 
-router = APIRouter()
+router = APIRouter(prefix="/products", tags=["Productos"])
 
 
-@router.post("/products/", response_model=Product, tags=['Productos'])
+@router.post("/", response_model=Product)
 def create_new_product(product: ProductCreate, db: Session = Depends(get_db)):
     """
     Crea un producto

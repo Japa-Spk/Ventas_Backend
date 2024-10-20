@@ -2,15 +2,16 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
 #db
-from app.database.connection import engine, Base
+from database.connection import engine, Base
 
 # middlewares
-from app.middlewares.error_handler import ErrorHandler
+from middlewares.error_handler import ErrorHandler
 from fastapi.middleware.cors import CORSMiddleware
 
 # routers
-from app.routers import client
-from app.routers import product
+from routers import client
+from routers import product
+from routers import sale
 
 
 app = FastAPI()
@@ -23,6 +24,7 @@ Base.metadata.create_all(bind=engine)
 # Incluir rutas
 app.include_router(client.router)
 app.include_router(product.router)
+app.include_router(sale.router)
 
 app.add_middleware(ErrorHandler)
 

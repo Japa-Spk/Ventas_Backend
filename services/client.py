@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.models.client import Client
-from app.schemas.client import ClientCreate
+from models.client import Client
+from schemas.client import ClientCreate
 
 class ClientService:
     
@@ -22,3 +22,7 @@ class ClientService:
     @staticmethod
     def client_exists(db: Session, cedula: str) -> bool:
         return db.query(Client).filter(Client.cedula == cedula).first() is not None
+
+    @staticmethod
+    def client_id_exists(db: Session, id: int) -> bool:
+        return db.query(Client).filter(Client.id == id).first() is not None

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.models.product import Product
-from app.schemas.product import ProductCreate
+from models.product import Product
+from schemas.product import ProductCreate
 
 class ProductService:
     
@@ -22,3 +22,6 @@ class ProductService:
     @staticmethod
     def product_exists(db: Session, code: str) -> bool:
         return db.query(Product).filter(Product.code == code).first() is not None
+    
+    def get_product_id(db: Session, id: int) -> Product:
+        return db.query(Product).filter(Product.id == id).first()
