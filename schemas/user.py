@@ -2,7 +2,10 @@ from pydantic import BaseModel
 from typing import Optional
 
 class UserBase(BaseModel):
+    cedula: str
     name: str
+    address: str
+    phone: str
     email: str
     password: str
     is_admin: Optional[bool]

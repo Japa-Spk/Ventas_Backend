@@ -13,23 +13,24 @@ class UserService:
         return db.query(User).filter(User.email == email).first()
 
     def create_user(db: Session, user: UserCreate):
-        db_user = User(
-            name=user.name,
-            email=user.email,
-            password=Hashing.bcrypt(user.password),
-            is_admin=user.is_admin,
-            is_active=user.is_active,
-        )
+        if UserService.get_user(db, user.email) is not None:
+            raise Exception("El Usuario ya existe.")
+
+        db_user = User(**user.dict())
+        db_user.password = Hashing.bcrypt(db_user.password)
 
         db.add(db_user)
-        db.commit()
-
-        db.refresh(db_user)
-        db_user.password = None
-
+        
+        try:
+            db.commit()
+            db.refresh(db_user)
+            db_user.password = None
+        except Exception as e:
+            db.rollback()
+            raise Exception("Error al crear el cliente. -> ") from e
         return db_user
 
-    def update_user( db: Session, userid: int, user: UserCreate):
+    def update_user(db: Session, userid: int, user: UserCreate):
         db_userid = db.query(User).filter(User.id == userid).first()
 
         db_userid.name = user.name

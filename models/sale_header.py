@@ -10,7 +10,7 @@ class SaleHeader(Base):
     id = Column(Integer, primary_key=True, index=True)
     consecutive = Column(String, unique=True)
     date = Column(DateTime, default=datetime.utcnow)
-    client_id = Column(Integer, ForeignKey("clients.id"))
+    user_id = Column(Integer, ForeignKey("users.id"))
     total_sale = Column(Float)
 
-    client = relationship("Client")
+    user = relationship("User")

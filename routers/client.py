@@ -5,10 +5,10 @@ from services.client import ClientService
 #db
 from database.connection import get_db
 
-router = APIRouter()
+router = APIRouter(prefix="/clients", tags=["Clientes"])
 
 
-@router.post("/clients/", response_model=Client, tags=['Clientes'])
+@router.post("/", response_model=Client)
 def create_new_client(client: ClientCreate, db: Session = Depends(get_db)):
     """
     Crea un cliente

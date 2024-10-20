@@ -12,12 +12,12 @@ router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @router.get("/")
-def getAllUser(db: Session = Depends(get_db)):
+def getAllUser(db: Session = Depends(get_db), current_user = Depends(get_currentUser)):
     return UserService.get_allUser(db=db)
 
 
 @router.post("/")
-def createUser(user: UserCreate, db: Session = Depends(get_db)):
+def createUser(user: UserCreate, db: Session = Depends(get_db), current_user = Depends(get_currentUser)):
     return UserService.create_user(db, user)
 
 
@@ -27,10 +27,10 @@ def getMe(current_user: User = Depends(get_currentUser)):
 
 
 @router.put("/{userid}")
-def updateUser(userid: int, user: UserCreate, db: Session = Depends(get_db)):
+def updateUser(userid: int, user: UserCreate, db: Session = Depends(get_db), current_user = Depends(get_currentUser)):
     return UserService.update_user(db=db, userid=userid, user=user)
 
 
 @router.delete("/{userid}")
-def deleteUser(userid: int, db: Session = Depends(get_db)):
+def deleteUser(userid: int, db: Session = Depends(get_db), current_user = Depends(get_currentUser)):
     return UserService.deleteUser(db=db, userid=userid)

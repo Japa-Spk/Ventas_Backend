@@ -9,7 +9,8 @@ from middlewares.error_handler import ErrorHandler
 from fastapi.middleware.cors import CORSMiddleware
 
 # routers
-from routers import client
+from routers import auth
+from routers import user
 from routers import product
 from routers import sale
 
@@ -22,7 +23,8 @@ app.version = "0.1"
 Base.metadata.create_all(bind=engine)
 
 # Incluir rutas
-app.include_router(client.router)
+app.include_router(auth.router)
+app.include_router(user.router)
 app.include_router(product.router)
 app.include_router(sale.router)
 

@@ -3,7 +3,7 @@ from jwt import PyJWTError
 import jwt
 from sqlalchemy.orm import Session
 from database.connection import get_db
-from users.usersservice import UserService
+from services.user import UserService
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
 

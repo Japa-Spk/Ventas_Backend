@@ -1,15 +1,18 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+
+from config.token import get_currentUser
+
 from schemas.sale import SaleCreate, Sale
 from services.sale import SaleService
 #db
 from database.connection import get_db
 
-router = APIRouter()
+router = APIRouter(prefix="/sales", tags=["Ventas"])
 
 
-@router.post("/sales/", response_model=Sale, tags=['Ventas'])
-def create_new_product(sale: SaleCreate, db: Session = Depends(get_db)):
+@router.post("/", response_model=Sale)
+def create_new_product(sale: SaleCreate, db: Session = Depends(get_db), current_user = Depends(get_currentUser)):
     """
     Crea un registro de venta
 
