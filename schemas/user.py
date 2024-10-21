@@ -7,11 +7,11 @@ class UserBase(BaseModel):
     address: str
     phone: str
     email: str
-    password: str
     is_admin: Optional[bool]
     is_active: Optional[bool]
 
 class UserCreate(UserBase):
+    password: str
     pass
 
 class User(UserBase):

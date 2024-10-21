@@ -1,17 +1,18 @@
 from fastapi import APIRouter, Depends
 
+from typing import List
 from sqlalchemy.orm import Session
 
 from database.connection import get_db
 from models.user import User
-from schemas.user import UserCreate
+from schemas.user import UserCreate, User as Userschema
 from services.user import UserService
 from config.token import get_currentUser
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
 
-@router.get("/")
+@router.get("/", response_model=List[Userschema])
 def getAllUser(db: Session = Depends(get_db), current_user = Depends(get_currentUser)):
     return UserService.get_allUser(db=db)
 
@@ -21,7 +22,7 @@ def createUser(user: UserCreate, db: Session = Depends(get_db), current_user = D
     return UserService.create_user(db, user)
 
 
-@router.get("/me")
+@router.get("/me", response_model=Userschema)
 def getMe(current_user: User = Depends(get_currentUser)):
     return current_user
 
