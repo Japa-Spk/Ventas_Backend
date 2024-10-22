@@ -12,6 +12,9 @@ class UserService:
     def get_user(db: Session, email: str):
         return db.query(User).filter(User.email == email).first()
 
+    def get_user_id(db: Session, id: int):
+        return db.query(User).filter(User.id == id).first()
+
     def create_user(db: Session, user: UserCreate):
         if UserService.get_user(db, user.email) is not None:
             raise Exception("El Usuario ya existe.")

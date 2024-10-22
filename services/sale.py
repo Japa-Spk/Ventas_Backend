@@ -8,7 +8,7 @@ from models.product import Product
 
 from schemas.sale import SaleCreate
 
-from services.client import ClientService
+from services.user import UserService
 from services.product import ProductService
 
 class SaleService:
@@ -42,7 +42,7 @@ class SaleService:
     def validate_sale(db:Session, sale: SaleCreate):
         sale_header = SaleHeader(**sale.header.dict())
         errors = []
-        if ClientService.client_id_exists(db, sale_header.client_id) == False:
+        if UserService.get_user_id(db, sale_header.client_id) is None:
             errors.append("El cliente no existe, verifique el reigstro de ventas")
         #Valid total_sale
         total_sale_value = 0
