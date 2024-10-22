@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 
 from config.hashing import Hashing
 from models.user import User
-from schemas.user import UserCreate
+from schemas.user import UserCreate, User as Userschema
 
 
 class UserService:
@@ -33,12 +33,12 @@ class UserService:
             raise Exception("Error al crear el cliente. -> ") from e
         return db_user
 
-    def update_user(db: Session, userid: int, user: UserCreate):
+    def update_user(db: Session, userid: int, user: Userschema):
         db_userid = db.query(User).filter(User.id == userid).first()
 
         db_userid.name = user.name
         db_userid.email = user.email
-        db_userid.password = Hashing.bcrypt(user.password)
+        # db_userid.password = Hashing.bcrypt(user.password)
         db_userid.is_admin = user.is_admin
         db_userid.is_active = user.is_active
 

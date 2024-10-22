@@ -28,7 +28,7 @@ def getMe(current_user: User = Depends(get_currentUser)):
 
 
 @router.put("/{userid}")
-def updateUser(userid: int, user: UserCreate, db: Session = Depends(get_db), current_user = Depends(get_currentUser)):
+def updateUser(userid: int, user: Userschema, db: Session = Depends(get_db), current_user = Depends(get_currentUser)):
     return UserService.update_user(db=db, userid=userid, user=user)
 
 
