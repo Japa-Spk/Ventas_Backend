@@ -54,3 +54,21 @@ class UserService:
         db.commit()
 
         return db_userid
+
+
+    @staticmethod
+    def create_default(db: Session):
+        if not db.query(User).filter(User.email == "admin@admin.com").first():
+            default_user = User(
+                cedula="123456789",
+                name="Admin",
+                address="CLL 123",
+                phone="5712345678",
+                email="admin@admin.com",
+                password=Hashing.bcrypt("TEST.123"),
+                is_admin=True,
+                is_active=True
+            )
+            db.add(default_user)
+            db.commit()
+            db.refresh(default_user)

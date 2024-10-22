@@ -1,13 +1,15 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
-
+from sqlalchemy.orm import Session
 #db
-from database.connection import engine, Base
+from database.connection import engine, Base, SessionLocal
 
 # middlewares
 from middlewares.error_handler import ErrorHandler
 from fastapi.middleware.cors import CORSMiddleware
 
+# services
+from services.user import UserService
 # routers
 from routers import auth
 from routers import user
@@ -20,7 +22,16 @@ app.title = "Ventas-Api"
 app.version = "0.1"
 
 # Crear las tablas
-Base.metadata.create_all(bind=engine)
+@app.on_event("startup")
+def on_startup():
+    # Crea todas las tablas en la base de datos
+    Base.metadata.create_all(bind=engine)
+    # Crea sesión de la base de datos
+    db:Session = SessionLocal()
+    # Crea usuario por defecto
+    UserService.create_default(db)
+    # Cierra la sesión
+    db.close()
 
 # Incluir rutas
 app.include_router(auth.router)

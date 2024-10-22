@@ -1,5 +1,10 @@
 # VENTAS BACKEND
 
+## Tecnologia
+- **Python FastAPI**
+- **Postgres SQL**
+- **OAuth2**
+- **JWT**
 ## Instalación
 
 ### 1. Crear Entorno Virtual para Dependencias
@@ -65,3 +70,39 @@ ACCESS_TOKEN_EXPIRE_MINUTES=1440
 - **`ACCESS_TOKEN_EXPIRE_MINUTES`**: Tiempo de expiración de los tokens de acceso (en minutos).
 
 > **Importante**: Asegúrate de mantener la `SECRET_KEY` segura y no exponerla en repositorios públicos.
+
+La `SECRET_KEY` que usas en tu archivo `.env` puede ser generada de manera aleatoria y debe ser única y difícil de adivinar. Aunque podrías inventarla manualmente, lo mejor es generar una clave segura para mejorar la seguridad de tu aplicación, especialmente si la estás utilizando para cosas como la firma de tokens JWT o la protección de sesiones.
+
+### Cómo Generar una `SECRET_KEY` Segura
+
+1. **Usando Python:**
+   Puedes generar una clave secreta usando Python para asegurarte de que sea segura y aleatoria. Ejecuta el siguiente código en tu terminal o en un script de Python:
+
+   ```python
+   import secrets
+   print(secrets.token_hex(32))
+   ```
+
+   Esto generará una clave hexadecimal de 64 caracteres (32 bytes), que es suficientemente segura para la mayoría de las aplicaciones.
+
+2. **Usando Comandos en el Terminal:**
+   En Linux o macOS, puedes usar el siguiente comando para generar una clave aleatoria:
+
+   ```bash
+   openssl rand -hex 32
+   ```
+
+   Esto también generará una cadena segura de 64 caracteres.
+
+3. **Definir en el Archivo `.env`:**
+   Una vez que tengas la clave generada, colócala en tu archivo `.env`:
+
+   ```env
+   SECRET_KEY=4e5d14d8f0c6b9a77d1b0e5a7d9158b2b5d8f027ab9ec6b248dd91b2f6e0a6c8
+   ```
+
+---
+## **Datos por defecto**
+Al momento de ejecutar el proyecto se crea un usuario por defecto con el rol de administrador, para poder crear productos y usuarios en el sistema.
+- **User:** admin@admin.com
+- **Password:** TEST.123
