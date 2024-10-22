@@ -1,6 +1,6 @@
 import math
 
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from models.sale_header import SaleHeader
 from models.sale_detail import SaleDetail
@@ -12,6 +12,14 @@ from services.user import UserService
 from services.product import ProductService
 
 class SaleService:
+    
+    @staticmethod
+    def get_all_sales_user(db: Session, user_id: int):
+        return db.query(SaleHeader).options(joinedload(SaleHeader.details)).filter(SaleHeader.user_id == user_id).all()
+    
+    @staticmethod
+    def get_all_sales(db: Session):
+        return db.query(SaleHeader).options(joinedload(SaleHeader.details)).all()
     
     @staticmethod
     def create_sale(db: Session, sale: SaleCreate):

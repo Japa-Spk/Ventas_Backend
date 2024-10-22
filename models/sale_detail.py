@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, Float, ForeignKey
+from sqlalchemy.orm import relationship
 from database.connection import Base
 
 class SaleDetail(Base):
@@ -9,3 +10,5 @@ class SaleDetail(Base):
     product_id = Column(Integer, ForeignKey("products.id"))
     sale_value = Column(Float)
     calculated_iva = Column(Float)
+
+    header = relationship("SaleHeader", back_populates="details")

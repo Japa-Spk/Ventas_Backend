@@ -56,3 +56,14 @@ class SaleCreate(SaleBase):
 
 class Sale(SaleBase):
     pass
+
+class SaleHeaderResponse(BaseModel):
+    id: int
+    consecutive: str
+    date: datetime
+    total_sale: float
+    user_id: int
+    details: List[SaleDetail]
+
+    class Config:
+        orm_mode = True

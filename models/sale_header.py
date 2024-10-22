@@ -14,3 +14,4 @@ class SaleHeader(Base):
     total_sale = Column(Float)
 
     user = relationship("User")
+    details = relationship("SaleDetail", back_populates="header")
