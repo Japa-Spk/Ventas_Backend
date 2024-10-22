@@ -13,6 +13,10 @@ class ProductService:
         return db.query(Product).filter(Product.code == code).first()
 
     @staticmethod
+    def get_product_id(db: Session, id: int):
+        return db.query(Product).filter(Product.id == id).first()
+
+    @staticmethod
     def create_product(db: Session, product: ProductCreate):
         if ProductService.get_product(db, product.code) is not None:
             raise Exception("El producto ya existe.")

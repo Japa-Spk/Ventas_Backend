@@ -5,7 +5,7 @@ from pydantic import BaseModel, validator
 #Cabecera
 class SaleHeaderBase(BaseModel):
     date: datetime
-    client_id: int
+    user_id: int
     total_sale: float
     @validator('total_sale')
     def total_sale_value_must_be_greater_than_zero(cls, v):

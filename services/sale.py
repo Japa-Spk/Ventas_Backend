@@ -15,6 +15,7 @@ class SaleService:
     
     @staticmethod
     def create_sale(db: Session, sale: SaleCreate):
+        print("Crear reg venta")
         errors = SaleService.validate_sale(db, sale)
         if errors:
             list_errors = "\n".join([f"Error:{item}" for item in errors])
@@ -42,7 +43,7 @@ class SaleService:
     def validate_sale(db:Session, sale: SaleCreate):
         sale_header = SaleHeader(**sale.header.dict())
         errors = []
-        if UserService.get_user_id(db, sale_header.client_id) is None:
+        if UserService.get_user_id(db, sale_header.user_id) is None:
             errors.append("El cliente no existe, verifique el reigstro de ventas")
         #Valid total_sale
         total_sale_value = 0
